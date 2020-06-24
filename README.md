@@ -6,6 +6,6 @@ Rails_Sparta_TIL
 後からみる自分に説明する気持ちで書こうと思う！
 
 # ディレクトリ構成
-.
+root/  
 ├── README.md  
 └── web(Web基礎について)
