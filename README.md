@@ -8,7 +8,9 @@ Rails_Sparta_TIL
 # ディレクトリ構成
 root/  
 ├── README.md  
-├── ruby(プロrubyについて)  
-│   ├── ruby.md  
-│   └── test.rb  
-└── web(web技術の基本について)
+├── **ruby**（rubyについて）  
+────ruby.md  
+────test.rb
+
+├── **web**(web技術の基本について)  
+──── web.md  
