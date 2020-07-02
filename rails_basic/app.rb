@@ -1,5 +1,13 @@
-require 'sinatra'
-require 'sinatra/reloader'
+require 'rubygems'
+require 'bundler'
+
+Bundler.require
+
+set :database, {adapter: "sqlite3", database: "contacts.sqlite3"}
+
+class User < ActiveRecord::Base
+  validates_presence_of :name
+end
 
 get '/' do
     @now = Time.now
