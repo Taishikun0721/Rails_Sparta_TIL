@@ -58,59 +58,56 @@ fizzbuzz(num:100)
 
 # カレンダー
 
-# require 'date'
+require 'date'
 
-# def spaces(space:)
-#     printf " " * space
-# end
-# # スペースでカレンダーを表現する
+def spaces(space:)
+    print " " * space
+end
+# スペースでカレンダーを表現する
 
-# def week_days()
-#   wd = (0..6).to_a
-#   wd.each do |w|
-#     printf " #{(Date.new(2020,6,1) + w).strftime("%a")}"
-#   end
-#   puts "\n"
-# end
-# # 曜日を表示する
+def week_days()
+  wd = (0..6).to_a
+  wd.each do |w|
+    printf " #{(Date.new(2020,6,1) + w).strftime("%a")}"
+  end
+  puts "\n"
+end
+# 曜日を表示する
 
-# def set_start_day(year, month, day)
-#   Date.new(year,month,day).wday
-# end 
+def set_start_day(year, month, day)
+  Date.new(year,month,day).wday
+end 
 
-# def show_days(year, month, day)
-#   last_day = Date.new(year, month, -1).day
-#   day_number = (1..last_day).to_a
-#   day_number.each do |d|
-#     printf spaces(space: 2).to_s + d.to_s if Date.new(year,month,d).day >= 10
-#     printf spaces(space: 2).to_s + d.to_s if Date.new(year,month,d).wday == 1 and Date.new(year,month,d).day < 10
-#     printf spaces(space: 3).to_s + d.to_s if Date.new(year,month,d).wday == 2 and Date.new(year,month,d).day < 10
-#     printf spaces(space: 3).to_s + d.to_s if Date.new(year,month,d).wday == 3 and Date.new(year,month,d).day < 10
-#     printf spaces(space: 3).to_s + d.to_s if Date.new(year,month,d).wday == 4 and Date.new(year,month,d).day < 10
-#     printf spaces(space: 3).to_s + d.to_s if Date.new(year,month,d).wday == 5 and Date.new(year,month,d).day < 10
-#     printf spaces(space: 3).to_s + d.to_s if Date.new(year,month,d).wday == 6 and Date.new(year,month,d).day < 10
-#     printf spaces(space: 3).to_s + d.to_s if Date.new(year,month,d).wday == 0 and Date.new(year,month,d).day < 10
-#     puts "\n" if Date.new(year,month,d).wday == 0
-#   end
-# end
+def show_days(year, month, day)
+  last_day = Date.new(year, month, -1).day
+  day_number = (1..last_day).to_a
+  
+  day_number.each do |d|
+    if Date.new(year,month,d).wday != 0
+      print spaces(space: 2).to_s + d.to_s.rjust(2) 
+    else
+      print spaces(space: 2).to_s + d.to_s.rjust(2) + "\n"
+    end
+  end
+end
 
 
-# def calender(year:,month:,day:)
-#   date = Date.new(year,month,day)
-#   printf spaces(space: 8).to_s + date.strftime("%B").to_s
-#   printf spaces(space: 2).to_s + date.year.to_s + "\n"
-#   week_days
-#   show_days(year,month,day)
-# end
-# # 実行用関数
+def calender(year:,month:,day:)
+  date = Date.new(year,month,day)
+  print spaces(space: 8).to_s + date.strftime("%B").to_s
+  print spaces(space: 2).to_s + date.year.to_s + "\n"
+  week_days
+  show_days(year,month,day)
+end
+# 実行用関数
 
-# calender(year:2020,month:7,day:1)
-# # 作成中
+calender(year:2020,month:6,day:1)
+# 作成中
 # ----------------------------------------------
 
 
 
-# 配列操作の練習
+# 配列操��の練習
 
   # ランキング機能
 
@@ -167,6 +164,6 @@ fizzbuzz(num:100)
     puts a.reject(&:even?)
 # ----------------------------------------------
 
-
+  
 
   
