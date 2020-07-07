@@ -46,8 +46,14 @@ delete '/todos/:id' do
 end
 
 get '/todos/:id/edit' do
-    @todo = Todo.find(params[:id])
-    erb :edit_todos_form
+    if session[:id]
+        @todo = session.delete :id
+        @message = session.delete :message
+        erb :edit_todos_form
+    else
+        @todo = Todo.find(params[:id])
+        erb :edit_todos_form
+    end
 end
 
 put '/todos/:id/done' do
@@ -66,12 +72,12 @@ end
 
 put '/todos/:id' do
     target_todo = Todo.find(params[:id])
-    session[:message] = "#{target_todo.id}番のタスクを更新しました"
     todo = params[:todo]
     if target_todo.update(todo: todo)
         session[:message] = "#{target_todo.id}番のタスクを更新しました"
         redirect '/'
     else 
+        session[:id] = Todo.find(params[:id])
         session[:message] = "空のタスクには変更できません"
         redirect '/todos/:id/edit'
     end

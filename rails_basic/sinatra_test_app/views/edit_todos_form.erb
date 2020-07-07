@@ -4,7 +4,8 @@
         <title>edit_todos_form</title>
     </head>
     <body>
-        <h1>投稿を更新する</h1>
+        <h1>タスクを更新する</h1>
+        <%= @message %>
         <form action="/todos/<%= @todo.id %>" method="post">
             <input type="text" name="todo" value=<%= @todo.todo %>>
             <input type="hidden" name="_method" value="PUT">
