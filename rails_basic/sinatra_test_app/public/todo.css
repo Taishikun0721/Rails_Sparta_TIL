@@ -1,0 +1,20 @@
+
+.todo_contaner{
+    width: 100%;
+    text-align: center;
+}
+
+.forms{
+    display: inline-flex;
+    margin-right: 20px;
+}
+
+h1{
+    text-align: center;
+    color: green;
+}
+
+.new_task{
+    text-align: center;
+    color: red;
+}

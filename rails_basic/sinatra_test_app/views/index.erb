@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>todoapp</title>
+        <link rel="stylesheet" href="todo.css">
+    </head>
+    <body>
+    <h1>todoapp</h1>
+        <div class="todo_contaner">
+            <%= @message %>
+            <% @todo.each do |todo| %>
+                <h3>タスク<%= todo.id %>.　<%= todo.todo %></h3>
+                <div class="forms">
+                <form action="/todos/<%= todo.id %>" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="削除">
+                </form>
+                <form action="/todos/<%= todo.id %>/done" method="post">
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="submit" value="完了">
+                </form>
+                </div>
+                <a href="/todos/<%= todo.id %>/edit">タスクを変更する</a></br>
+            <% end %>
+        </div>
+        <h2 class="new_task"><a href="todo_new">新しくタスクを登録する</a></h2>
+    </body>
+</html>
