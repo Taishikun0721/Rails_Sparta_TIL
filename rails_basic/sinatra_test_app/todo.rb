@@ -1,11 +1,8 @@
 require 'rubygems'
 require 'bundler'
+require './models/todo.rb'
 
 Bundler.require
-
-class Todo < ActiveRecord::Base
-    validates_presence_of :todo
-end
 
 use Rack::MethodOverride
 
