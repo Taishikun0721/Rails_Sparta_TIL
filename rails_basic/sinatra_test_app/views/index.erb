@@ -8,7 +8,7 @@
     <h1>todoapp</h1>
         <div class="todo_contaner">
             <%= @message %>
-            <% @todo.each do |todo| %>
+            <% @todos.each do |todo| %>
                 <h3>タスク<%= todo.id %>.　<%= todo.todo %></h3>
                 <div class="forms">
                 <form action="/todos/<%= todo.id %>" method="post">

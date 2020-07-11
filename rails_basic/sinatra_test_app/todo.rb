@@ -11,7 +11,7 @@ enable :sessions
 
 get '/' do
     @message = session.delete :message
-    @todo = Todo.all
+    @todos = Todo.all
     erb :index
 end
 
@@ -22,8 +22,8 @@ end
 
 post '/todos' do
     todo = params[:todo]
-    @todo = Todo.new(todo: todo)
-    if @todo.save
+    new_todo = Todo.new(todo: todo)
+    if new_todo.save
         session[:message] = "タスクを登録しました"
         redirect '/'
     else
