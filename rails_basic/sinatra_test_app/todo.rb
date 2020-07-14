@@ -1,11 +1,8 @@
 require 'rubygems'
 require 'bundler'
+require './models/todo.rb'
 
 Bundler.require
-
-class Todo < ActiveRecord::Base
-    validates_presence_of :todo
-end
 
 use Rack::MethodOverride
 
@@ -42,6 +39,8 @@ delete '/todos/:id' do
         redirect '/'
     else
         session[:message] = "削除できませんでした。もう一度実行してください"
+        @todo = Todo.find(params[:id])
+        redirect '/todos/:id'
     end
 end
 
@@ -58,7 +57,6 @@ end
 
 put '/todos/:id/done' do
     target_todo = Todo.find(params[:id])
-    session[:message] = "#{target_todo.id}版のタスクが完了しました"
     if target_todo.todo.include?("(済)")
         session[:message] = "#{target_todo.id}番のタスクは既に完了しています"
         redirect '/'
