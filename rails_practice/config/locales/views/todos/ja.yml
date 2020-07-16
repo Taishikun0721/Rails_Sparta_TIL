@@ -1,0 +1,10 @@
+ja:
+  todos:
+    index:
+      title: 'タイトル'
+    show:
+      # 引数の指定もできる。
+      title: 'タイトル'
+    edit:
+      # view側で t(.titile), user_name: @user.name みたいな感じで設定できる
+      title: 'タイトル'
