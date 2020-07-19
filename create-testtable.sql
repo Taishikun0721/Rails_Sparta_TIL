@@ -141,3 +141,70 @@ values(93, '風の谷のナウシカ')
      ,(94, '天空のしろラピュタ')
      ,(95, 'となりのトトロ')
      ,(96, '崖の上のポニョ');
+     
+update movies set title = '天空の城ラピュタ'
+where movie_id = 94;
+
+select m.*, c.* 
+from movies as m, 
+characters as c;
+
+select m.*, c.*
+from movies as m,
+     characters as c
+where m.movie_id = c.movie_id
+and c.gender = 'F';
+
+
+select c.* from characters c
+join movies m on c.movie_id = m.movie_id
+where c.gender = 'F';
+
+
+select c.* from characters as c
+where movie_id in( 
+        select m.movie_id
+        from movies as m
+        where title = 'となりのトトロ'
+    );
+    
+select c.* from characters as c
+join movies as m using(movie_id)
+where c.gender = 'F';
+
+select * from characters;
+
+select * from movies;
+
+select m.*, c.*
+from movies as m 
+full outer join characters as c on m.movie_id = c.movie_id;
+
+
+select m.movie_id , m.title
+from movies as m 
+join characters as c on m.movie_id = c.movie_id
+group by m.movie_id;
+
+select m.* from movies as m
+left outer join characters as c on c.movie_id = m.movie_id
+where c.id is null;
+
+select c.id, c.name, c.gender from characters as c
+left outer join movies as m 
+on m.movie_id = c .movie_id
+where c.movie_id is null;
+
+
+select m.movie_id, m.title, count(c.name) from movies as m
+left join characters as c on m.movie_id = c.movie_id 
+group by m.movie_id
+order by m.movie_id;
+
+create table notnulls( 
+    null_id integer primary key
+,   title text not null unique
+);
+
+insert into notnulls(null_id, title)
+values (102, 'これはnullではない');
