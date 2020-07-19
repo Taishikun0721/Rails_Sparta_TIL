@@ -18,22 +18,19 @@ class Calender
   #スペースを挿入するためのメソッド
 
   def set_start_day(year, month, day)
-    spaces(space: 24) if @@date.wday == 0
-    spaces(space: 0) if @@date.wday == 1
-    spaces(space: 4) if @@date.wday == 2
-    spaces(space: 8) if @@date.wday == 3
-    spaces(space: 12) if @@date.wday == 4
-    spaces(space: 16) if @@date.wday == 5
-    spaces(space: 20) if @@date.wday == 6
+    array_of_space_without0 = []
+    -4.step(20,4) { |n| array_of_space_without0 << n }
+    array_of_space_without0[0] = 24
+    array_of_space = array_of_space_without0
+    array_of_space = array_of_space.map.with_index { |n,i| [i,n] }.to_h
+    spaces(space: array_of_space[@@date.wday])
   end 
 
   # 月の開始日をスペースで再現する
 
   def week_days()
     wd = (0..6).to_a
-    wd.each do |w|
-      printf " #{(Date.new(2020,6,1) + w).strftime("%a")}"
-    end
+    wd.each { |w| printf " #{(Date.new(2020,6,1) + w).strftime("%a")}" }
     puts "\n"
   end
   # カレンダーの曜日を表示する
