@@ -1,0 +1,27 @@
+<%= form_with(model: todo, local: true) do |form| %>
+
+  <%= render 'shared/errors', todo_object: todo %>
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :priority %>
+    <%= form.number_field :priority %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :categorie %>
+    <%= form.select :category_id, categories.map { |n| [n.name, n.id] } %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @category.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @category.description %>
+</p>
+
+<% @category_todos.each do |todo| %>
+  <%= link_to todo.title, todo %>
+  <%= link_to '削除', todo, method: :delete %>
+<% end %>
+
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %>

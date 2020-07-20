@@ -205,6 +205,16 @@ create table notnulls(
     null_id integer primary key
 ,   title text not null unique
 );
-
+ 
 insert into notnulls(null_id, title)
 values (102, 'これはnullではない');
+
+
+create table referrence_keys(
+    id integer primary key 
+,   movie_id integer references movies(movie_id)
+,   name text not null
+);
+
+insert into referrence_keys(id, movie_id,name)
+values (101, 999, '外部キーがおかしい');
