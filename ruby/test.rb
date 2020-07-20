@@ -310,3 +310,28 @@ p :apple.class, 'apple'.class
 hash = { japan: :yen, us: :dollar, india: :ruppe }
 puts hash[:japan]
 
+
+puts hash[:us]
+
+def buy_burger(drink:, potato:)
+  if drink && potato
+    puts 'ドリンクポテト'
+  else
+    puts 'なし'
+  end
+end
+params = { drink: true, potato: true }
+buy_burger(params)
+
+
+def convert_length(length:, ex_unit:, unit:, **other)
+  length_hash = { m: 1.0, ft: 3.28, in: 39.37 }
+  puts "#{(length / length_hash[ex_unit] * length_hash[unit]).to_s}です"
+end
+
+convert_length(length: 35000, ex_unit: :ft, unit: :m, chicken: true)
+
+name_hash = { inomatu: :taishiro, inomatu2: :tomoka, inokuchi: :marin, matuo: :ai }
+puts name_hash.keys
+
+puts name_hash.has_key?(:inokuchi)
