@@ -1,1 +1,8 @@
 .idea
+genbarails/.ruby-version
+rails_basic/Shinatra/.rakeTasks
+rails_basic/sinatra_test_app/.bundle/
+rails_basic/sinatra_test_app/.rakeTasks
+rails_basic/sinatra_test_app/vender/
+
+
