@@ -335,3 +335,24 @@ name_hash = { inomatu: :taishiro, inomatu2: :tomoka, inokuchi: :marin, matuo: :a
 puts name_hash.keys
 
 puts name_hash.has_key?(:inokuchi)
+
+
+class User
+  def initialize(name)
+    @name = name
+  end
+
+  def name
+    @name
+  end
+
+end
+#
+# users = []
+# users << User.new('Alice', 'Ruby', 20)
+# users << User.new('Bob', 'Python',30)
+#
+# users.each { |user| puts "#{user.full_name}  #{user.age}" }
+
+user = User.new('inokuchi')
+p user.name
