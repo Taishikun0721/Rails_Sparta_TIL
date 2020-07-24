@@ -4,7 +4,8 @@ class Ticket
     @fare = fare
   end
 
-  def stamp(name)
-    @stamped_at = name
+  def stamp(station)
+    @stamped_at = station
   end
 end
+
