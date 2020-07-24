@@ -9,7 +9,8 @@
 <div class="todo_contaner">
   <%= @message %>
   <% @todo.each do |todo| %>
-    <h3>タスク<%= todo.id %>.　<%= todo.todo %></h3>
+    <h3>タスク<%= todo.id %>.<%= todo.todo %></h3>
+
     <div class="forms">
       <form action="/todos/<%= todo.id %>" method="post">
         <input type="hidden" name="_method" value="DELETE">
