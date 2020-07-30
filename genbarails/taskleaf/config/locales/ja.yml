@@ -16,6 +16,13 @@ ja:
         description: 詳しい説明
         created_at: 登録日時
         updated_at: 更新日時
+      user:
+        id: ID
+        name: 名前
+        email: メールアドレス
+        admin: 管理者権限
+        password: パスワード
+        password_confirmation: パスワード（確認）
   date:
     abbr_day_names:
       - 日
@@ -157,6 +164,10 @@ ja:
     label:
       name: 名前
       description: 詳しい説明
+      email: メールアドレス
+      admin: 管理者権限
+      password: パスワード
+      password_confirmation: パスワード(確認)
   number:
     currency:
       format:
