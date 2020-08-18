@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources 'tasks' do
+    post :confirm, action: :confirm_new, on: :new
+    patch :confirm_edit, action: :confirm_edit, on: :member
+  end
+  
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
@@ -8,6 +13,5 @@ Rails.application.routes.draw do
   end
 
   root 'sessions#new'
-  resources 'tasks'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

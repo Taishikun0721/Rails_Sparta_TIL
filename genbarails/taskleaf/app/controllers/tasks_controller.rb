@@ -1,11 +1,12 @@
 class TasksController < ApplicationController
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = current_user.tasks
+    @tasks = current_user.tasks.recent
   end
 
   def show
-    @task = current_user.tasks.find(params[:id])
+
   end
 
   def new
@@ -14,7 +15,14 @@ class TasksController < ApplicationController
 
   def create
     @task = current_user.tasks.new(task_params)
+
+    if params[:back].present?
+      render :new
+      return
+    end
+
     if @task.save
+      logger.debug "#タスク：#{@task.attributes.inspect}"
       redirect_to @task, notice: "タスク「#{@task.name}」を登録しました"
     else
       render :new
@@ -22,24 +30,37 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
+
   end
 
   def update
-    @task = Task.find(params[:id])
+    render :new if params[:back].present?
     @task.update!(task_params)
     redirect_to @task, notice: "タスク「#{@task.name}」を更新しました"
   end
 
   def destroy
-    task = Task.find(params[:id])
-    task.destroy!
-    redirect_to root_path, notice: "タスク「#{task.name}」を削除しました"
+    @task.destroy!
+    redirect_to tasks_path, notice: "タスク「#{@task.name}」を削除しました"
+  end
+
+  def confirm_new
+    @task = current_user.tasks.new(task_params)
+    render :new unless @task.valid?
+  end
+
+  def confirm_edit
+    @task = current_user.tasks.new(task_params)
+    render :new unless @task.valid?
   end
 
   private
 
   def task_params
     params.require(:task).permit(:name, :description)
+  end
+
+  def set_task
+    @task = current_user.tasks.find(params[:id])
   end
 end
