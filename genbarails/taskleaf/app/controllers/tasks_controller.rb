@@ -1,8 +1,14 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :confirm_edit]
 
   def index
-    @tasks = current_user.tasks.recent
+    @q = current_user.tasks.ransack(params[:q])
+    @tasks = @q.result(distinct: true)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @tasks.generate_csv, filename: "tasks-#{Time.zone.now.strftime('%Y%m%d%S')}.csv" }
+    end
   end
 
   def show
@@ -15,13 +21,13 @@ class TasksController < ApplicationController
 
   def create
     @task = current_user.tasks.new(task_params)
-
     if params[:back].present?
       render :new
       return
     end
 
     if @task.save
+      TaskMailer.creation_email(@task).deliver_now
       logger.debug "#タスク：#{@task.attributes.inspect}"
       redirect_to @task, notice: "タスク「#{@task.name}」を登録しました"
     else
@@ -34,9 +40,13 @@ class TasksController < ApplicationController
   end
 
   def update
-    render :new if params[:back].present?
-    @task.update!(task_params)
-    redirect_to @task, notice: "タスク「#{@task.name}」を更新しました"
+    if params[:back].present?
+      render :edit
+      return
+    else
+      @task.update!(task_params)
+      redirect_to @task, notice: "タスク「#{@task.name}」を更新しました"
+    end
   end
 
   def destroy
@@ -49,15 +59,27 @@ class TasksController < ApplicationController
     render :new unless @task.valid?
   end
 
+  def import
+    if params[:file]
+      @task = current_user.tasks.import(params[:file])
+      redirect_to tasks_path, notice: 'タスクを追加しました' unless !!@task&.errors
+      render :new if !!@task.errors
+      # @taskにはエラーの情報を入れているので、それをindexに返したい
+    else
+      redirect_to tasks_path, notice: 'ファイルがありません。'
+    end
+
+  end
+
   def confirm_edit
-    @task = current_user.tasks.new(task_params)
-    render :new unless @task.valid?
+    @task.assign_attributes(task_params)
+    render :edit unless @task.valid?
   end
 
   private
 
   def task_params
-    params.require(:task).permit(:name, :description)
+    params.require(:task).permit(:name, :description, :image)
   end
 
   def set_task
