@@ -16,6 +16,9 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
+gem 'ransack'
+#検索機能追加のため
+
 gem 'slim-rails'
 gem 'html2slim'
 # 現場Rails用にslimを追加
@@ -24,9 +27,19 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 # 現場Rails用にbootstrap導入
 
+# gem 'image_processing', '~> 1.2'
+gem "mini_magick"
+#Active_storagの画像サイズをリサイズするために導入
 
 gem 'rails-i18n', '~> 5.1'
 # テスト導入
+
+gem 'kaminari'
+# ページネーションを導入
+
+gem 'sidekiq', '~> 5.0'
+# 非同期処理を行うためのgem
+
 
 # Use CoffeeScript for .coffee assets and views
 # gem 'coffee-rails', '~> 4.2'
