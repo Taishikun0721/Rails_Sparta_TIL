@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   def index
     @q = current_user.tasks.ransack(params[:q])
-    @tasks = @q.result(distinct: true)
+    @tasks = @q.result(distinct: true).page(params[:page])
 
     respond_to do |format|
       format.html
@@ -28,6 +28,7 @@ class TasksController < ApplicationController
 
     if @task.save
       TaskMailer.creation_email(@task).deliver_now
+      SampleJob.perform_later
       logger.debug "#タスク：#{@task.attributes.inspect}"
       redirect_to @task, notice: "タスク「#{@task.name}」を登録しました"
     else
@@ -62,8 +63,11 @@ class TasksController < ApplicationController
   def import
     if params[:file]
       @task = current_user.tasks.import(params[:file])
-      redirect_to tasks_path, notice: 'タスクを追加しました' unless !!@task&.errors
-      render :new if !!@task.errors
+      if @task.errors.present?
+        render :new
+      else
+        redirect_to tasks_path, notice: 'タスクを追加しました'
+      end
       # @taskにはエラーの情報を入れているので、それをindexに返したい
     else
       redirect_to tasks_path, notice: 'ファイルがありません。'
