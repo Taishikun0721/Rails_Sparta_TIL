@@ -1,11 +1,15 @@
 class Task < ApplicationRecord
+  paginates_per 15
+  # ページネーションの表示上限を設定
   before_validation :set_nameless_name
   validates :name, presence: true, length: { maximum: 30 }
   validates :name, uniqueness: true, unless: :used_set_nameless_name?
   validate :validate_name_not_including_comma
 
   belongs_to :user
+
   scope :recent, -> { order(created_at: :desc) }
+  # scopeを使用して、ヘルパーメソッドを定義
 
   has_one_attached :image
 
@@ -35,13 +39,13 @@ class Task < ApplicationRecord
       task = self.new
       task.attributes = row.to_hash.slice(*csv_attributes)
       if task.valid?
-        task.save!
+        return task.tap(&:save)
       else
         return task
       end
     end
   end
-
+  # import機能を実装
 
   private
 
