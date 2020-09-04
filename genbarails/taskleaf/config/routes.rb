@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   resources :tasks do
-    post :confirm, action: :confirm_new, on: :new
-    patch :confirm_edit, action: :confirm_edit, on: :member
+    # post :confirm, action: :confirm_new, on: :new
+    # patch :confirm_edit, on: :member
     post :import, on: :collection
   end
+
+  resource :confirms, only: %i[create update]
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
@@ -14,7 +16,6 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i[edit update], module: :public
-
 
   root 'sessions#new'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

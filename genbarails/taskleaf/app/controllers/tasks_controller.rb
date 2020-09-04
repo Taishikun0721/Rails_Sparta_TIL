@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy, :confirm_edit]
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
     @q = current_user.tasks.ransack(params[:q])
@@ -54,11 +54,6 @@ class TasksController < ApplicationController
     @task.destroy
   end
 
-  def confirm_new
-    @task = current_user.tasks.new(task_params)
-    render :new unless @task.valid?
-  end
-
   def import
     if params[:file]
       @task = current_user.tasks.import(params[:file])
@@ -67,17 +62,13 @@ class TasksController < ApplicationController
       else
         redirect_to tasks_path, notice: 'タスクを追加しました'
       end
-      # @taskにはエラーの情報を入れているので、それをindexに返したい
+      # @taskにはエラーの情報を入れているので、それをindexに返した
+      # い
     else
       redirect_to tasks_path, notice: 'ファイルがありません。'
     end
-
   end
 
-  def confirm_edit
-    @task.assign_attributes(task_params)
-    render :edit unless @task.valid?
-  end
 
   private
 
