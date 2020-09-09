@@ -1,6 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:edit,:show]
   before_action :admin_require
+
   def index
     @users = User.all
   end
@@ -18,8 +19,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
+    p session[:user_id]
     @user = User.new(user_params)
     if @user.save
+      sign_in(@user)
+      p session[:user_id]
       redirect_to admin_user_path(@user), notice: "#{@user.name}さんのアカウントを登録しました。"
     else
       render :new
@@ -50,5 +54,9 @@ class Admin::UsersController < ApplicationController
 
   def admin_require
     redirect_to root_path unless current_user.admin?
+  end
+
+  def sign_in(user)
+    session[:user_id] = user.id
   end
 end

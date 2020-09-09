@@ -1,0 +1,17 @@
+inherit_from: .rubocop_todo.yml
+
+require: rubocop-rails
+
+# Offense count: 17
+# Configuration parameters: AllowedChars.
+#日本語でのコメント許可
+AsciiComments:
+  Enabled: false
+
+#モジュール名::クラス名の書方を許可
+ClassAndModuleChildren:
+  Enabled: false
+
+Metrics/MethodLength:
+  countcomments: true
+  Max: 18
