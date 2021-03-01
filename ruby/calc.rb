@@ -31,42 +31,62 @@ require 'benchmark'
 # end
 
 require 'byebug'
+#
+# Benchmark.bm 100 do |r|
+#   p lists = Array.new(100) { rand(100) }
+#   r.report "solution1" do
+#     for i in 1.. lists.size do
+#       min = nil
+#       target_index = 0
+#       lists[(i - 1)..-1].each_with_index do |list, index|
+#         min ||= list
+#         if list < min
+#           min = list
+#           target_index = index
+#         end
+#       end
+#       lists[i - 1], lists[target_index + i - 1] = lists[target_index + i - 1], lists[i - 1]
+#     end
+#     p lists
+#   end
+#
+#   r.report "solution2" do
+#     p lists.sort
+#   end
+# end
+#
+#
+#
+#
 
-Benchmark.bm 100 do |r|
-  p lists = Array.new(100) { rand(100) }
-  r.report "solution1" do
-    for i in 1.. lists.size do
-      min = nil
-      target_index = 0
-      lists[(i - 1)..-1].each_with_index do |list, index|
-        min ||= list
-        if list < min
-          min = list
-          target_index = index
-        end
-      end
-      lists[i - 1], lists[target_index + i - 1] = lists[target_index + i - 1], lists[i - 1]
-    end
-    p lists
-  end
+#
+# p a = gets.to_i
+# b, c = gets.chomp.split(' ').map(&:to_i)
+#
+# answer = a + b + c
+# string = gets.chomp
+#
+# puts  "#{answer} #{string}"
 
-  r.report "solution2" do
-    p lists.sort
-  end
+#
+# a, b = gets.chomp.split(' ').map(&:to_i)
+# if (a * b).odd?
+#   puts "Odd"
+# elsif (a * b).even?
+#   puts "Even"
+# end
+
+n = 0
+nums = gets.chomp.split(' ').map(&:to_i)
+
+def half(nums)
+  nums.map { |num| num / 2 }
 end
 
+while nums.all?(&:even?) do
+  n += 1
+  nums = half(nums)
+end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+p n
 
