@@ -133,24 +133,43 @@ def func4(numbers)
 end
 
 require 'benchmark'
-Benchmark.bm 100 do |r|
-  r.report "Olog(n)" do
-    func2(10)
-  end
+# Benchmark.bm 100 do |r|
+#   r.report "Olog(n)" do
+#     func2(10)
+#   end
+#
+#   r.report "O(n)" do
+#     func3((1..10).to_a)
+#   end
+#
+#   r.report "O(n*2)" do
+#     func4([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+#   end
+# end
 
-  r.report "O(n)" do
-    func3((1..10).to_a)
-  end
+# ボゴソート
 
-  r.report "O(n*2)" do
-    func4([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+require 'byebug'
+def bogo_sort(numbers)
+  while not in_order(numbers)
+    numbers.shuffle!
   end
+  p numbers
+end
+
+def in_order(numbers)
+  for i in 0..numbers.size - 2 do
+    return false if numbers[i] > numbers[i + 1]
+  end
+  true
 end
 
 
-
-
-
+Benchmark.bm 100 do |r|
+  r.report 'bogo_sort' do
+    bogo_sort(Array.new(10) { rand(10)})
+  end
+end
 
 
 
