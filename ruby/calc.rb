@@ -164,12 +164,34 @@ def in_order(numbers)
   true
 end
 
+def bubble_sort(numbers)
+  limits = (0..numbers.size - 2).to_a
+  limits.each do |limit|
+    for i in 0..(limits.size - 1 - limit) do
+      if numbers[i] > numbers[i + 1]
+        numbers[i], numbers[i + 1] = numbers[i + 1], numbers[i]
+      end
+    end
+  end
+  p numbers
+end
 
 Benchmark.bm 100 do |r|
   r.report 'bogo_sort' do
-    bogo_sort(Array.new(10) { rand(10)})
+    bogo_sort([1, 5, 3, 8, 7, 4, 2, 20, 17, 14])
+  end
+
+  r.report 'bubble_sort' do
+    bubble_sort([1, 5, 3, 8, 7, 4, 2, 20, 17, 14])
   end
 end
+
+
+# Benchmark.bm 100 do |r|
+#   r.report 'bogo_sort' do
+#     bogo_sort(Array.new(10) { rand(10)})
+#   end
+# end
 
 
 
