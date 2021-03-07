@@ -151,10 +151,13 @@ require 'benchmark'
 
 require 'byebug'
 def bogo_sort(numbers)
+  n = 0
   while not in_order(numbers)
     numbers.shuffle!
+    n += 1
   end
   p numbers
+  p n
 end
 
 def in_order(numbers)
@@ -176,22 +179,48 @@ def bubble_sort(numbers)
   p numbers
 end
 
-Benchmark.bm 100 do |r|
-  r.report 'bogo_sort' do
-    bogo_sort([1, 5, 3, 8, 7, 4, 2, 20, 17, 14])
-  end
+def shaker_sort(numbers)
+  swaped = true
+  starts = 0
+  ends = numbers.size - 2
+  while swaped do
+    swaped = false
+    for i in starts..ends do
+      if numbers[i] > numbers[i + 1]
+        numbers[i], numbers[i + 1] = numbers[i + 1], numbers[i]
+      end
+      swaped = true
+    end
 
-  r.report 'bubble_sort' do
-    bubble_sort([1, 5, 3, 8, 7, 4, 2, 20, 17, 14])
+    return numbers unless swaped
+    swaped = false
+    ends  -= 1
+
+    for i in (starts..ends).to_a.reverse do
+      if numbers[i] > numbers[i + 1]
+        numbers[i], numbers[i + 1] = numbers[i + 1], numbers[i]
+      end
+      swaped = true
+    end
+    return numbers unless swaped
+    starts += 1
   end
 end
 
+# shaker_sort([1, 5, 3, 8, 7, 4, 2, 20, 17, 14])
 
-# Benchmark.bm 100 do |r|
-#   r.report 'bogo_sort' do
-#     bogo_sort(Array.new(10) { rand(10)})
-#   end
-# end
+Benchmark.bm 100 do |r|
+  array = Array.new(1000) { rand(100) }.uniq
+
+  r.report 'bubble_sort' do
+    bubble_sort(array)
+  end
+
+  r.report 'shaker_sort' do
+    p shaker_sort(array)
+  end
+end
+
 
 
 
