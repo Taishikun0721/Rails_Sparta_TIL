@@ -23,11 +23,6 @@ def binary_search(numbers, answer)
   end
 end
 
-def median(numbers)
-  numbers.count / 2
-end
-
-
 Benchmark.bm do |r|
   numbers = (1..1000).to_a
   answer = (1..1000).to_a.sample
